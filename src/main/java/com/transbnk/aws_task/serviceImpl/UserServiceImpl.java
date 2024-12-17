@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.transbnk.aws_task.model.User;
 import com.transbnk.aws_task.repository.UserRepository;
 import com.transbnk.aws_task.service.UserService;
@@ -76,6 +75,7 @@ public class UserServiceImpl implements UserService {
                 .body(inputStreamResource);
     }
 
+    ////////////////////////////aws-task//////////////////////////////////////////
     @Override
     public ResponseEntity<?> uploadFile(MultipartFile multipartFile) {
 
