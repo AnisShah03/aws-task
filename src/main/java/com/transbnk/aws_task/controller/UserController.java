@@ -16,7 +16,6 @@ import java.io.IOException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/v1/user")
@@ -53,10 +52,11 @@ public class UserController {
 
     @PostMapping("/file/upload")
     public ResponseEntity<?> uploadingFile(@RequestParam(name = "file") MultipartFile multipartFile) {
-        if (multipartFile != null) {
+        if (multipartFile != null && multipartFile.getContentType() != null
+                && multipartFile.getContentType().equalsIgnoreCase("application/pdf")) {
             return userService.uploadFile(multipartFile);
         }
-        return ResponseEntity.badRequest().body("File not uploaded...");
+        return ResponseEntity.badRequest().body("Only upload pdf file...");
     }
 
     @GetMapping("/file/download")
