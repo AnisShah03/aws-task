@@ -1,5 +1,10 @@
 package com.transbnk.aws_task.utility;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -59,4 +64,40 @@ public class ExcelUtility {
 
     }
 
+    public ByteArrayInputStream excelToTxt(InputStream inputStream) {
+
+        try {
+            // FileInputStream fileInputStream = new FileInputStream(file);
+            XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
+
+            StringBuilder txtContent = new StringBuilder();
+
+            xssfWorkbook.forEach(sheet -> {
+                sheet.forEach(row -> {
+                    row.forEach(cell -> {
+                        String cellValue = switch (cell.getCellType()) {
+                            case STRING -> cell.getStringCellValue();
+                            case NUMERIC -> String.valueOf(cell.getNumericCellValue());
+                            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+                            case FORMULA -> cell.getCellFormula();
+                            case BLANK -> "";
+                            default -> "";
+                        };
+                        // Append the value to the StringBuilder
+                        txtContent.append(cellValue).append("\t"); // Tab-separated
+                    });
+                    // Add a new line after each row
+                    txtContent.append("\n");
+                });
+            });
+            xssfWorkbook.close();
+            byte[] txtBytes = txtContent.toString().getBytes();
+            return new ByteArrayInputStream(txtBytes);
+        } catch (Exception e) {
+
+        }
+
+        return null;
+
+    }
 }

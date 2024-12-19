@@ -11,6 +11,7 @@ import com.transbnk.aws_task.utility.ExcelUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,31 @@ public class UserController {
     }
 
     @GetMapping("/file/download")
-    public ResponseEntity<?> getMethodName(@RequestParam String key) {
+    public ResponseEntity<?> downloadPdf(@RequestParam String key) {
         return userService.downloadFile(key);
+    }
+
+    // @PostMapping("/excel-txt")
+    // public ResponseEntity<?> excelToText(@RequestParam(name = "file")
+    // MultipartFile file) {
+    // if (file != null && file.getContentType() != null &&
+    // file.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+    // {
+    // try {
+    // return userService.excelToTxt(file.getInputStream());
+    // } catch (IOException e) {
+    // e.printStackTrace();
+    // }
+    // }
+    // return ResponseEntity.badRequest().body("Only upload excel file...");
+    // }
+
+    @PostMapping("/excel-txt")
+    public ResponseEntity<?> excelToText(@RequestParam(name = "file") MultipartFile file) throws IOException {
+        // File file = new File("C:\\Users\\Anis.Shah\\Downloads\\Books.xlsx");
+        
+        return userService.excelToTxt(file.getInputStream());
+
     }
 
 }

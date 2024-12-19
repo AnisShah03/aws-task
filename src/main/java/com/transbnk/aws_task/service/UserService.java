@@ -1,5 +1,6 @@
 package com.transbnk.aws_task.service;
 
+import java.io.File;
 import java.io.InputStream;
 
 import org.springframework.http.ResponseEntity;
@@ -16,4 +17,6 @@ public interface UserService {
     ResponseEntity<?> uploadFile(MultipartFile multipartFile);
 
     ResponseEntity<?> downloadFile(String key);
+
+    ResponseEntity<?> excelToTxt(InputStream inputStream);
 }

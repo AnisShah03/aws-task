@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
                 .body(inputStreamResource);
     }
 
-    ////////////////////////////aws-task//////////////////////////////////////////
+    //////////////////////////// aws-task//////////////////////////////////////////
     @Override
     public ResponseEntity<?> uploadFile(MultipartFile multipartFile) {
 
@@ -123,6 +123,17 @@ public class UserServiceImpl implements UserService {
                     .body(inputStreamResource);
         }
         return ResponseEntity.internalServerError().body("something went wrong...");
+    }
+
+    @Override
+    public ResponseEntity<?> excelToTxt(InputStream inputStream) {
+
+        ByteArrayInputStream excelToTxt = excelUtility.excelToTxt(inputStream);
+
+        InputStreamResource inputStreamResource = new InputStreamResource(excelToTxt);
+
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=converted.txt")
+                .contentType(MediaType.TEXT_PLAIN).body(inputStreamResource);
     }
 
 }
