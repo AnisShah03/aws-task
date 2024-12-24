@@ -28,7 +28,7 @@
 
 // @Component
 // public class AuthEntryPointJwt implements AuthenticationEntryPoint {// ! this interface indicating this class provides
-//                                                                     // ! custom handling for authentication failures
+                                                                     // ! custom handling for authentication failures
 
 //     @Override
 //     public void commence(HttpServletRequest request, HttpServletResponse response,
